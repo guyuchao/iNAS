@@ -1,0 +1,105 @@
+# general settings
+name: train_supernet_sod_4gpu_b10_e200_aug
+model_type: OneShotModel
+num_gpu: 4  # set num_gpu: 0 for cpu mode
+manual_seed: 0
+find_unused_parameters: True
+
+# dataset and data loader settings
+datasets:
+  train:
+    name: DUTS-TR
+    type: Saliency_Dataset
+    data_dir: datasets/saliency/
+    data_list: datasets/saliency/DUTS-TR.lst
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+    input_size: 320
+    # data loader
+    use_shuffle: true
+    use_flip: true
+    num_worker_per_gpu: 4
+    batch_size_per_gpu: 10
+    dataset_enlarge_ratio: 1
+    prefetch_mode: ~
+
+  val:
+    name: ECSSD
+    type: Saliency_Dataset
+    data_dir: datasets/saliency/
+    data_list: datasets/saliency/ECSSD.lst
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+    input_size: 320
+    num_worker_per_gpu: 4
+    batch_size_per_gpu: 10
+
+# network structures
+supernet:
+  type: iNASSupernet
+  cfg: ~
+  num_classes: 1
+  activation: sigmoid
+  output_level_ids: (0,1,2,3,4)
+
+# path
+path:
+  pretrain_network: experiments/pretrained_models/search_space/checkpoint-28b11d7f.pth
+  strict_load: false
+  resume_state: ~
+  param_key: state_dict
+
+# training settings
+train:
+  optim:
+    type: Adam
+    lr: !!float 2e-4
+    head_lr_mul: 10
+    weight_decay: 0
+    betas: [0.9, 0.99]
+
+  scheduler:
+    type: PolynomialLRDecay
+    max_decay_steps: 52700
+    end_learning_rate: !!float 0
+    power: 0.9
+
+  multi_scale_training: true
+
+  total_iter: 52700
+  warmup_iter: 1000
+
+  # losses
+  main_opt:
+    type: DSBCELoss
+    aux_weight: 0.4
+    reduction: mean
+
+  distill_opt:
+    type: DSMSELoss
+    aux_weight: 0.4
+    reduction: mean
+
+# validation settings
+val:
+  val_freq: !!float 5e3
+  save_img: false
+  finetune_bn_iters: 100
+  output_transform: sod # choices ["semseg", "sod"]
+  metrics:
+    Fmeasure:
+    MAE: ~
+
+# logging settings
+logger:
+  print_freq: 100
+  save_checkpoint_freq: !!int 5000
+  use_tb_logger: true
+  wandb:
+    project: ~
+    resume_id: ~
+
+# dist training settings
+dist_params:
+  backend: nccl
+  port: 29500

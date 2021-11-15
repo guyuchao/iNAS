@@ -1,0 +1,58 @@
+# general settings
+name: test_standalone_sod
+model_type: StandAloneModel
+num_gpu: 1  # set num_gpu: 0 for cpu mode
+manual_seed: 0
+find_unused_parameters: True
+
+# dataset and data loader settings
+datasets:
+  test_1:
+    name: ECSSD
+    type: Saliency_Dataset
+    data_dir: datasets/saliency/
+    data_list: datasets/saliency/ECSSD.lst
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+    input_size: 320
+    num_worker_per_gpu: 4
+    batch_size_per_gpu: 10
+
+# network structures
+standalone:
+  type: iNASStandalone
+  cfg: experiments/pretrained_models/searched_models/search_iNAS_1gpu_iter10/models/CPU_search/CPU_lat@27.00ms_Fmeasure@0.9437.json
+  num_classes: 1
+  activation: sigmoid
+  output_level_ids: (0,)
+
+# path
+path:
+  strict_load: true
+  resume_state: ~
+  param_key: ~
+  standalone_path: experiments/pretrained_models/searched_models/search_iNAS_1gpu_iter10/models/CPU_search/CPU_lat@27.00ms_Fmeasure@0.9437.pth
+
+# validation settings
+val:
+  val_freq: !!float 5e3
+  save_img: true
+  finetune_bn_iters: 200
+  metrics:
+    Fmeasure:
+    MAE: ~
+    Smeasure: ~
+
+# logging settings
+logger:
+  print_freq: 100
+  save_checkpoint_freq: !!int 5000
+  use_tb_logger: true
+  wandb:
+    project: ~
+    resume_id: ~
+
+# dist training settings
+dist_params:
+  backend: nccl
+  port: 29500

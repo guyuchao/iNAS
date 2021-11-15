@@ -1,0 +1,102 @@
+[100%] /data/local/tmp/0_1,3,224,224.pt
+/media/guyuchao/data/gyc/ofaseg/NasSaliency/nas-sal_new/deployment/mobile_jitmodels/0_1,3,224,224.pt: 1 file pushed. 2.1 MB/s (11788 bytes in 0.005s)
+start run [1/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 10856.2. Iters per second: 92.1128
+start run [2/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 10873. Iters per second: 91.9708
+start run [3/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 10934.7. Iters per second: 91.4521
+start run [4/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 10749.3. Iters per second: 93.0296
+start run [5/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 7772.45. Iters per second: 128.66
+start run [6/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 7870.99. Iters per second: 127.049
+start run [7/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 7798.28. Iters per second: 128.233
+start run [8/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 9504.27. Iters per second: 105.216
+start run [9/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 7756.61. Iters per second: 128.922
+start run [10/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 7509.79. Iters per second: 133.159
+start run [11/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 7596.46. Iters per second: 131.64
+start run [12/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 7591.25. Iters per second: 131.731
+start run [13/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 7498.96. Iters per second: 133.352
+start run [14/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 7471.15. Iters per second: 133.848
+start run [15/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 7747.71. Iters per second: 129.07
+start run [16/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 7756.41. Iters per second: 128.926
+start run [17/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 7641.3. Iters per second: 130.868
+start run [18/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 9284.95. Iters per second: 107.701
+start run [19/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 7581.88. Iters per second: 131.893
+start run [20/20]
+Starting benchmark.
+Running warmup runs.
+Main runs.
+Main run finished. Microseconds per iter: 8085.89. Iters per second: 123.672
