@@ -1,3 +1,4 @@
+import torch
 from torch import nn as nn
 from torch.nn import functional as F
 
@@ -80,7 +81,7 @@ class DSMSELoss(nn.Module):
         self.reduction = reduction
         self.aux_weight = aux_weight
 
-    def forward(self, pred, soft_target):
+    def forward(self, pred_S, pred_T):
         """[summary]
 
         Args:
@@ -91,22 +92,24 @@ class DSMSELoss(nn.Module):
         Returns:
             [type]: [description]
         """
-        assert isinstance(pred, dict)
-        assert 'level_0' in pred.keys()
+        assert isinstance(pred_S, dict)
+        assert 'level_0' in pred_S.keys()
+        soft_target = pred_T['level_0'].detach()
         loss = 0.0
-        for k in pred.keys():
+        for k in pred_S.keys():
             if k == 'level_0':
-                loss += F.mse_loss(pred[k], soft_target)
+                loss += F.mse_loss(pred_S[k], soft_target)
             else:
-                loss += self.aux_weight * F.mse_loss(pred[k], soft_target)
+                loss += self.aux_weight * F.mse_loss(pred_S[k], soft_target)
         return loss
 
 
 @LOSS_REGISTRY.register()
 class DSCrossEntropyLoss(nn.Module):
 
-    def __init__(self, aux_weight=0.4, reduction='mean'):
+    def __init__(self, weight, aux_weight=0.4, reduction='mean'):
         super(DSCrossEntropyLoss, self).__init__()
+        self.weight = weight
         self.aux_weight = aux_weight
         self.reduction = reduction
 
@@ -114,4 +117,39 @@ class DSCrossEntropyLoss(nn.Module):
         assert 'level_0' in pred and 'level_2' in pred, 'level_0 and level_2 are needed to compute loss'
         loss = F.cross_entropy(pred['level_0'], target, reduction=self.reduction, ignore_index=255)
         loss += self.aux_weight * F.cross_entropy(pred['level_2'], target, reduction=self.reduction, ignore_index=255)
-        return loss
+        return self.weight * loss
+
+
+@LOSS_REGISTRY.register()
+class DSPixelWiseKLLoss(nn.Module):
+
+    def __init__(self, weight, ignore_index=255, aux_weight=0.4, reduction='mean'):
+        super(DSPixelWiseKLLoss, self).__init__()
+        self.weight = weight
+        self.ignore_index = ignore_index
+        self.aux_weight = aux_weight
+        self.criterion = nn.CrossEntropyLoss(ignore_index=ignore_index, reduction=reduction)
+
+    def forward(self, pred, soft_target):
+        pred_level_0 = pred['level_0']
+        soft_target_level_0 = soft_target['level_0'].detach()
+
+        assert pred_level_0.shape == soft_target_level_0.shape, 'the output dim of teacher and student differ'
+        N, C, W, H = pred_level_0.shape
+        softmax_pred_T = F.softmax(soft_target_level_0.permute(0, 2, 3, 1).contiguous().view(-1, C), dim=1)
+        logsoftmax = nn.LogSoftmax(dim=1)
+        loss = (torch.sum(
+            -softmax_pred_T * logsoftmax(pred_level_0.permute(0, 2, 3, 1).contiguous().view(-1, C)))) / W / H
+
+        # side output
+        if self.aux_weight > 0.0:
+            pred_level_2 = pred['level_2']
+            soft_target_level_2 = soft_target['level_2'].detach()
+            N, C, W, H = pred_level_2.shape
+            softmax_pred_T2 = F.softmax(soft_target_level_2.permute(0, 2, 3, 1).contiguous().view(-1, C), dim=1)
+            logsoftmax = nn.LogSoftmax(dim=1)
+            loss_aux = (torch.sum(
+                -softmax_pred_T2 * logsoftmax(pred_level_2.permute(0, 2, 3, 1).contiguous().view(-1, C)))) / W / H
+            loss += self.aux_weight * loss_aux
+
+        return self.weight * loss

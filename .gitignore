@@ -9,6 +9,7 @@ tb_logger/*
 wandb/*
 tmp/*
 .idea/*
+iNAS/version.py
 
 # part code have not organized
 classifier/*

@@ -1,4 +1,5 @@
 import cv2
+import math
 import numpy as np
 import random
 import torch
@@ -73,4 +74,48 @@ class RandomHorizontalFlip(object):
 class Identity(object):
 
     def __call__(self, data_dict):
+        return data_dict
+
+
+# semantic segmentation
+
+
+class RandomResizedCrop(object):
+
+    def __init__(self, scales=(0.5, 1.), size=(512, 1024)):
+        self.scales = scales
+        self.size = size
+
+    def __call__(self, data_dict):
+
+        image, label = data_dict['image'], data_dict['label']
+        assert image.shape[:2] == label.shape[:2]
+
+        crop_h, crop_w = self.size
+        scale = np.random.uniform(min(self.scales), max(self.scales))
+        image_h, image_w = [math.ceil(size * scale) for size in image.shape[:2]]
+        image = cv2.resize(image, (image_w, image_h))
+        label = cv2.resize(label, (image_w, image_h), interpolation=cv2.INTER_NEAREST)
+
+        if (image_h, image_w) == (crop_h, crop_w):
+            data_dict['image'] = image
+            data_dict['label'] = label
+            return data_dict
+
+        pad_h, pad_w = 0, 0
+        if image_h < crop_h:
+            pad_h = (crop_h - image_h) // 2 + 1
+        if image_w < crop_w:
+            pad_w = (crop_w - image_w) // 2 + 1
+        if pad_h > 0 or pad_w > 0:
+            image = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w), (0, 0)), 'constant')
+            label = np.pad(label, ((pad_h, pad_h), (pad_w, pad_w)), 'constant', constant_values=255)
+
+        image_h, image_w, _ = image.shape
+        sh, sw = np.random.random(2)
+        sh, sw = int(sh * (image_h - crop_h)), int(sw * (image_w - crop_w))
+        image = image[sh:sh + crop_h, sw:sw + crop_w, :].copy()
+        label = label[sh:sh + crop_h, sw:sw + crop_w].copy()
+        data_dict['image'] = image
+        data_dict['label'] = label
         return data_dict

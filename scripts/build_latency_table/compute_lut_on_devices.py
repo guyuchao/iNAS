@@ -8,9 +8,8 @@ import torch.nn as nn
 from collections import OrderedDict
 
 from iNAS.archs.iNAS_standalone.iNAS_backbone import MBConvLayer
-from iNAS.archs.iNAS_standalone.iNAS_util import (BasicFusionOps, BasicFusionOpsTP, BatchNorm2d, Conv2d,
-                                                  DownsampleMultilevel, DownsampleMultilevelTP, Identity,
-                                                  UpsampleMultilevel, UpsampleMultilevelTP)
+from iNAS.archs.iNAS_standalone.iNAS_util import (BatchNorm2d, Conv2d, DecoderFusion, DecoderUpsample, Identity,
+                                                  TransportDownsample, TransportFusion, TransportUpsample)
 
 
 class Latency_Measure:
@@ -132,11 +131,11 @@ class Latency_Measure:
 
     def update_dynamicmb_latency(self, dictcfg):
         module = MBConvLayer(
-            max_inc=dictcfg['inc'],
-            max_ouc=dictcfg['outc'],
+            in_channels=dictcfg['inc'],
+            out_channels=dictcfg['outc'],
             stride=dictcfg['stride'],
             expand_ratio=dictcfg['ratio'],
-            max_kernel_size_array=[dictcfg['kernel']])
+            kernel_size_array=[dictcfg['kernel']])
         inp_shape = (dictcfg['inc'], dictcfg['inres'], dictcfg['inres'])
         inp = self.get_input(inp_shape)
 
@@ -156,7 +155,7 @@ class Latency_Measure:
 
     def update_fusiontp_latency(self, dictcfg):
         inp_shape = (dictcfg['fusion'], dictcfg['inc'], dictcfg['inres'], dictcfg['inres'])
-        module = BasicFusionOpsTP(dictcfg['inc'], max_kernel_size_array=[dictcfg['kernel']])
+        module = TransportFusion(dictcfg['inc'], kernel_size_array=[dictcfg['kernel']])
         inp = self.get_input(inp_shape)
 
         if self.device == 'mobile':
@@ -175,7 +174,7 @@ class Latency_Measure:
 
     def update_fusiond_latency(self, dictcfg):
         inp_shape = (dictcfg['fusion'], dictcfg['inc'], dictcfg['inres'], dictcfg['inres'])
-        module = BasicFusionOps(dictcfg['inc'], max_kernel_size_array=[dictcfg['kernel']])
+        module = DecoderFusion(dictcfg['inc'], kernel_size_array=[dictcfg['kernel']])
         inp = self.get_input(inp_shape)
 
         if self.device == 'mobile':
@@ -198,10 +197,10 @@ class Latency_Measure:
             module = Identity()
         elif dictcfg['inres'] < dictcfg['outres']:
             level_diff = int(math.log2(dictcfg['outres'] / dictcfg['inres']))
-            module = UpsampleMultilevelTP(level_diff, max_inc=dictcfg['inc'], max_ouc=dictcfg['outc'])
+            module = TransportUpsample(level_diff, in_channels=dictcfg['inc'], out_channels=dictcfg['outc'])
         else:
             level_diff = int(math.log2(dictcfg['inres'] / dictcfg['outres']))
-            module = DownsampleMultilevelTP(level_diff, max_inc=dictcfg['inc'], max_ouc=dictcfg['outc'])
+            module = TransportDownsample(level_diff, in_channels=dictcfg['inc'], out_channels=dictcfg['outc'])
         inp = self.get_input(inp_shape)
 
         if self.device == 'mobile':
@@ -224,10 +223,9 @@ class Latency_Measure:
             module = Identity()
         elif dictcfg['inres'] < dictcfg['outres']:
             level_diff = int(math.log2(dictcfg['outres'] / dictcfg['inres']))
-            module = UpsampleMultilevel(level_diff, max_inc=dictcfg['inc'], max_ouc=dictcfg['outc'])
+            module = DecoderUpsample(level_diff, in_channels=dictcfg['inc'], out_channels=dictcfg['outc'])
         else:
-            level_diff = int(math.log2(dictcfg['inres'] / dictcfg['outres']))
-            module = DownsampleMultilevel(level_diff, max_inc=dictcfg['inc'], max_ouc=dictcfg['outc'])
+            raise NotImplementedError
         inp = self.get_input(inp_shape)
 
         if self.device == 'mobile':

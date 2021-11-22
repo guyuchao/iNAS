@@ -126,7 +126,7 @@ class OneShotModel(BaseModel):
             loss_dict['l_%s' % sample_rate] = loss.item()
 
             if sample_rate == 'max' and self.distill_opt is not None:
-                teacher_pred = results['level_0'].detach()
+                teacher_pred = results  # not detach
 
             if idx == len(arch_dict) - 1:
                 retain_graph = False
