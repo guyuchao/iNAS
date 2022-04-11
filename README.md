@@ -191,6 +191,7 @@ Please see [Tutorial.md](docs/Tutorial.md) for the basic usage of those steps in
     <th>#Flops</th>
     <th>#Latency@CPU</th>
     <th>Download</th>
+    <th>SalincyMaps</th>
 </tr>
 <tr>
     <td style="text-align:center; font-weight:bold"> Handcraft Models </td>
@@ -199,6 +200,7 @@ Please see [Tutorial.md](docs/Tutorial.md) for the basic usage of those steps in
     <td style="text-align:center"> </td>
     <td style="text-align:center"> </td>
     <td rowspan="5">We provide a speed benchmark of handcraft models and you can download it from <a href="https://drive.google.com/file/d/1Snb0tCFxbZZS8nWuKOuNx_G3wI7w8m-G/view?usp=sharing">Google Drive</a> / <a href="https://pan.baidu.com/s/1ywKVEgtXyn_6l81ExyixeA">Baidu Drive (b34c)</a>.</td>
+    <td rowspan="5"></td>
 </tr>
 <tr>
     <td style="text-align:center"> EGNet-R (ICCV19) </td>
@@ -235,6 +237,7 @@ Please see [Tutorial.md](docs/Tutorial.md) for the basic usage of those steps in
     <td style="text-align:center"> </td>
     <td style="text-align:center"> </td>
     <td rowspan="5">Models and logs can be downloaded from <a href="https://drive.google.com/drive/folders/1DjB9xPDMwAnrQQHoc2RDVG7grTQ67C6J?usp=sharing">Google Drive</a> / <a href="https://pan.baidu.com/s/1ForIlqNJj7YDqDRR9SC3gg">Baidu Drive (jgg3).</a></td>
+    <td style="text-align:center"></td>
 </tr>
 <tr>
     <td style="text-align:center">CPU_lat@27.00ms_Fmeasure@0.9437</td>
@@ -242,6 +245,7 @@ Please see [Tutorial.md](docs/Tutorial.md) for the basic usage of those steps in
     <td style="text-align:center">5.09M</td>
     <td style="text-align:center">0.45G</td>
     <td style="text-align:center">29.97ms</td>
+    <td style="text-align:center"><a href="https://drive.google.com/file/d/1QbW9F3axH0qxOfOOu0ylI3N2K-sdis9b/view?usp=sharing">Google Drive</a></td>
 </tr>
 <tr>
     <td style="text-align:center">CPU_lat@30.42ms_Fmeasure@0.9462</td>
@@ -249,6 +253,7 @@ Please see [Tutorial.md](docs/Tutorial.md) for the basic usage of those steps in
     <td style="text-align:center">5.83M</td>
     <td style="text-align:center">0.58G</td>
     <td style="text-align:center">33.03ms</td>
+    <td style="text-align:center"><a href="https://drive.google.com/file/d/1-x8BujGdwk2cEnlziCBIzQYUcGCf1CNd/view?usp=sharing">Google Drive</a></td>
 </tr>
 <tr>
     <td style="text-align:center">CPU_lat@35.76ms_Fmeasure@0.9493</td>
@@ -256,6 +261,7 @@ Please see [Tutorial.md](docs/Tutorial.md) for the basic usage of those steps in
     <td style="text-align:center">8.15M</td>
     <td style="text-align:center">0.69G</td>
     <td style="text-align:center">38.74ms</td>
+    <td style="text-align:center"><a href="https://drive.google.com/file/d/1ydqlvgKHUey9xAEU2j8E_oL1zF0ShBiB/view?usp=sharing">Google Drive</a></td>
 </tr>
 <tr>
     <td style="text-align:center">CPU_lat@45.55ms_Fmeasure@0.9522</td>
@@ -263,6 +269,7 @@ Please see [Tutorial.md](docs/Tutorial.md) for the basic usage of those steps in
     <td style="text-align:center">13.44M</td>
     <td style="text-align:center">0.85G</td>
     <td style="text-align:center">49.26ms</td>
+    <td style="text-align:center"><a href="https://drive.google.com/file/d/1okEdNUIPHXlPqKXy1AQGX3XkeIhMxGm6/view?usp=sharing">Google Drive</a></td>
 </tr>
 <tr>
     <td style="text-align:center; font-weight:bold"> Supernet: iNAS_SOD_200e_aug</td>
@@ -271,6 +278,7 @@ Please see [Tutorial.md](docs/Tutorial.md) for the basic usage of those steps in
     <td style="text-align:center"> </td>
     <td style="text-align:center"> </td>
     <td rowspan="5">Models and logs can be download from <a href="https://drive.google.com/drive/folders/1epKOruGhfyfU2ECZniTa2o8VlKPoMl3q?usp=sharing">Google Drive</a> / <a href="https://pan.baidu.com/s/1jz9_X-p4M7jF6nC3hY_6yw">Baidu Drive (x60e)</a>.</td>
+    <td style="text-align:center"></td>
 </tr>
 <tr>
     <td style="text-align:center">CPU_lat@26.99ms_Fmeasure@0.9487</td>
@@ -278,6 +286,7 @@ Please see [Tutorial.md](docs/Tutorial.md) for the basic usage of those steps in
     <td style="text-align:center">5.15M</td>
     <td style="text-align:center">0.48G</td>
     <td style="text-align:center; font-weight:bold">29.08ms</td>
+    <td style="text-align:center"><a href="https://drive.google.com/file/d/1ea6OTtIdllpeaWM3AxF4XrJc1MEqeH1n/view?usp=sharing">Google Drive</a></td>
 </tr>
 <tr>
     <td style="text-align:center">CPU_lat@34.80ms_Fmeasure@0.9520</td>
@@ -285,6 +294,7 @@ Please see [Tutorial.md](docs/Tutorial.md) for the basic usage of those steps in
     <td style="text-align:center">7.48M</td>
     <td style="text-align:center">0.65G</td>
     <td style="text-align:center">37.35ms</td>
+    <td style="text-align:center"><a href="https://drive.google.com/file/d/1bsrHe14Sb5T32CuZAGj7iJMVCuwQTs87/view?usp=sharing">Google Drive</a></td>
 </tr>
 <tr>
     <td style="text-align:center">CPU_lat@40.84ms_Fmeasure@0.9540</td>
@@ -292,6 +302,7 @@ Please see [Tutorial.md](docs/Tutorial.md) for the basic usage of those steps in
     <td style="text-align:center">9.23M</td>
     <td style="text-align:center">0.75G</td>
     <td style="text-align:center">44.20ms</td>
+    <td style="text-align:center"><a href="https://drive.google.com/file/d/1kSfQ4GNut-T6AIC_lwTei1Et_vb06FdS/view?usp=sharing">Google Drive</a></td>
 </tr>
 <tr>
     <td style="text-align:center">CPU_lat@59.10ms_Fmeasure@0.9560</td>
@@ -299,6 +310,7 @@ Please see [Tutorial.md](docs/Tutorial.md) for the basic usage of those steps in
     <td style="text-align:center">16.29M</td>
     <td style="text-align:center">1.08G</td>
     <td style="text-align:center; font-weight:bold">61.88ms</td>
+    <td style="text-align:center"><a href="https://drive.google.com/file/d/16jcmJeK3dirHoKl9KRBqKMopoMlROeDa/view?usp=sharing">Google Drive</a></td>
 </tr>
 </table>
 
